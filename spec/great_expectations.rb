@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_context "GreatExpectations", :a => :b do
+module GreatExpectations
   def great_expectations
     return {
       :unordered_list => {
