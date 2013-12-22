@@ -1,39 +1,24 @@
 class RubyMark
   def initialize(markdown)
-    @markdown = @html = markdown
+    @markdown = markdown
   end
   
-  def toh
-    self
-      .ordered_lists
-      .unordered_lists
-      .emphasis
-      .headings
-      .blockquotes
-      .paragraphs
-      .links
-  end
-  
-  def ordered_lists
-    @html = @html
+  def ordered_lists(markdown)
+    markdown
       .gsub(/\n\n(\d*\. .*)/, "\n<ol>\n\\1")
       .gsub(/^(\d*\. .*)\n\n/, "\\1\n</ol>\n")
       .gsub(/^\d*\. (.*)/, "<li>\\1</li>")
-    
-    self
   end
 
-  def unordered_lists
-    @html = @html
+  def unordered_lists(markdown)
+    markdown
       .gsub(/\n\n(\* .*)/, "<ul>\n\\1")
       .gsub(/^(\* .*)\n\n/, "\\1\n</ul>\n\n")
       .gsub(/^\* (.*)/, "<li>\\1</li>")
-    
-    self
   end
 
-  def emphasis
-    @html = @html
+  def emphasis(markdown)
+    markdown
       .gsub(/__(.*)__/, "<strong>\\1</strong>")
       .gsub(/_(.*)_/, "<em>\\1</em>")
       .gsub(/ <em> /, " _ ")
@@ -46,11 +31,10 @@ class RubyMark
       .gsub(/ <\/em> /, " * ")
       .gsub(/\\<em>/, "*")
       .gsub(/\\<\/em>/, "*")
-    self
   end
   
-  def headings
-     @html = @html
+  def headings(markdown)
+     markdown
         .gsub(/^\#\#\#\#\#\# (.*) \#\#\#\#\#\#/, '<h6>\1</h6>')
         .gsub(/^\#\#\#\#\#\# (.*)/, '<h6>\1</h6>')
         .gsub(/^\#\#\#\#\# (.*) \#\#\#\#\#/, '<h5>\1</h5>')
@@ -63,12 +47,10 @@ class RubyMark
         .gsub(/^\#\# (.*)/, '<h2>\1</h2>')
         .gsub(/^\# (.*) \#/, '<h1>\1</h1>')
         .gsub(/^\# (.*)/, '<h1>\1</h1>')
-
-      self
   end
   
-  def paragraphs
-    @html = @html
+  def paragraphs(markdown)
+    markdown
       .gsub(/^\n(.+)\n$/, "\n<p>\\1</p>\n")
       .gsub(/\A(.+)/, "<p>\\1")
       .gsub(/(.+)\Z/, "\\1</p>")
@@ -80,40 +62,49 @@ class RubyMark
       .gsub(/(<.*>)<\/p>/, "\\1")
       .gsub(/<p>(<.*>)/, "\\1")
       .gsub(/(<.*>)<\/p>/, "\\1")
-    
-    self
   end
   
-  def links
-    @html = @html
+  def links(markdown)
+    markdown
       .gsub(/\[(.*)\]\((.*) "(.*)"\)/, "<a href=\"\\2\" title=\"\\3\">\\1</a>")
       .gsub(/\[(.*)\]\((.*)\)/, "<a href=\"\\2\">\\1</a>")
-    
-    self
   end
   
-  def blockquotes
-    @html = @html
-      .gsub(/\n> (.*)\n[^>]/m, "\n<blockquote>\\1</blockquote>\n\n")
-      .gsub(/\n> /, "\n")
+  def blockquotes(markdown)
+    markdown.gsub!(/((^[ \t]*>[ \t]?.+\n(.+\n)*\n*)+)/) do
+  	  bq = $1
+  	  if bq
+        bq.gsub!(/^[ \t]*>[ \t]?/, "") # trim one level of quoting
+		    bq.gsub!(/^[ \t]+$/, "")       # trim whitespace-only lines
+		    bq.strip!
+		  
+		    "<blockquote><p>\n#{bq}\n</p></blockquote>\n\n"
+		  else
+		    $&
+	    end
+    end
+    markdown
+
+   # m = /((^[ \t]*>[ \t]?.+\n(.+\n)*\n*)+)/.match(markdown)
+   # if m
+   #   bq = m[0] 
+   #   bq.gsub!(/^[ \t]*>[ \t]?/, "") # trim one level of quoting
+	 #   bq.gsub!(/^[ \t]+$/, "")       # trim whitespace-only lines
+	 #   bq.strip!
+	 #   
+	 #   markdown.gsub!(/((^[ \t]*>[ \t]?.+\n(.+\n)*\n*)+)/, "\n\n<blockquote><p>\n#{bq}\n</p></blockquote>\n\n")
+   # end
+   # return markdown
+    
+      #.gsub(/\n> (.*)\n[^>]/m, "\n<blockquote>\\1</blockquote>\n\n")
+      #.gsub(/\n> /, "\n")
       # .gsub(/^\n> (.*)\n$/, "\n<blockquote>\\1</blockquote>\n")
       #.gsub(/<p>> (.*)<\/p>/, "<blockquote>\\1</blockquote>")
       #.gsub(/<p>> (.*)<\/p>/m, "<blockquote>\\1</blockquote>")
-    
-    self
   end
   
   def to_html
-    self
-      .ordered_lists
-      .unordered_lists
-      .emphasis
-      .headings
-      .blockquotes
-      .paragraphs
-      .links
-    
-    @html
+    links(paragraphs(headings(emphasis(unordered_lists(ordered_lists(blockquotes(@markdown)))))))
   end
 end
 
@@ -127,7 +118,7 @@ class RubyMarkRunner
   end
   
   def print_usage
-    puts "Usage: rubymark file.md  # this will send html to STDOUT"
+    puts "Usage: rubymark file.md  # this will send HTML to STDOUT"
   end
 
   def process_md_file(md_file_name)
