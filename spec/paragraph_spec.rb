@@ -12,4 +12,8 @@ describe "Paragraph" do
   it "can be followed by other paragraphs" do
     expect(RubyMark.new("\n\nThis is a paragraph.\n\nThis is another paragraph.\n\nAnd another.\n\n").to_html).to match(/<p>This is a paragraph.<\/p>\n\n<p>This is another paragraph.<\/p>\n\n<p>And another.<\/p>/)
   end
+  
+  it "can have multiple lines" do
+    expect(RubyMark.new("\n\nThis is a paragraph\nthat has\nmultiple lines.\n\n").to_html).to eq("\n\n<p>This is a paragraph\nthat has\nmultiple lines.</p>\n\n")
+  end
 end

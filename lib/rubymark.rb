@@ -36,11 +36,24 @@ class RubyMark
       .gsub(/^\# (.*) \#/, '<h1>\1</h1>')
       .gsub(/^\# (.*)/, '<h1>\1</h1>')
       .gsub(/^\n(.+)\n$/, "\n<p>\\1</p>\n")
+      .gsub(/\A(.+)/, "<p>\\1")
+      .gsub(/(.+)\Z/, "\\1</p>")
+      .gsub(/\n\n/, "</p>\n\n<p>")
       .gsub(/\n\n<p><\/p>\n\n/, "\n\n")
+      .gsub(/\A<\/p>/, "")
+      .gsub(/<p>\Z/, "")
       .gsub(/<p>(<.*>)/, "\\1")
       .gsub(/(<.*>)<\/p>/, "\\1")
+      .gsub(/<p>(<.*>)/, "\\1")
+      .gsub(/(<.*>)<\/p>/, "\\1")
+      .gsub(/<p>> (.*)<\/p>/, "<blockquote>\\1</blockquote>")
+      .gsub(/<p>> (.*)<\/p>/m, "<blockquote>\\1</blockquote>")
+      .gsub(/\n> /, "\n")
       .gsub(/\[(.*)\]\((.*) "(.*)"\)/, "<a href=\"\\2\" title=\"\\3\">\\1</a>")
       .gsub(/\[(.*)\]\((.*)\)/, "<a href=\"\\2\">\\1</a>")
+      
+      # .gsub(/^\n> (.*)\n$/, "\n<blockquote>\\1</blockquote>\n")
+      
   end
 end
 
