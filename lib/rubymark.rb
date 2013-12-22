@@ -5,6 +5,9 @@ class RubyMark
   
   def to_html
     @markdown
+      .gsub(/\n\n(\d*\. .*)/, "<ol>\n\\1")
+      .gsub(/^\d*\. (.*)\n\n/, "\\1\n</ol>")
+      .gsub(/^\d*\. (.*)/, "<li>\\1</li>")
       .gsub(/\n\n(\* .*)/, "<ul>\n\\1")
       .gsub(/^\* (.*)\n\n/, "\\1\n</ul>")
       .gsub(/^\* (.*)/, "<li>\\1</li>")
