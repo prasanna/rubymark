@@ -17,3 +17,5 @@ Add my public key (if you haven’t already) as a trusted certificate
 `gem cert --add <(curl -Ls https://raw.github.com/prasanna/rubymark/master/certs/prasanna.pem)`
 
 `gem install rubymark -P HighSecurity`
+
+Checksums of released versions can be found [here](https://github.com/prasanna/rubymark/tree/master/checksum)
