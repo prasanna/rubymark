@@ -14,8 +14,6 @@ RubyMark is cryptographically signed. To be sure the gem you install hasn’t be
 
 Add my public key (if you haven’t already) as a trusted certificate
 
-`
-gem cert --add <(curl -Ls https://raw.github.com/prasanna/rubymark/master/certs/prasanna.pem)
+`gem cert --add <(curl -Ls https://raw.github.com/prasanna/rubymark/master/certs/prasanna.pem)`
 
-gem install rubymark -P HighSecurity
-`
+`gem install rubymark -P HighSecurity`
