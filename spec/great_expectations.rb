@@ -131,7 +131,32 @@ And some more.
 <p>And some more.</p>
 
         EOHTML
-      }
+      },
+
+      :embedded_html => {
+        :md => <<-EOMD,
+
+<section>
+
+## Section Heading
+
+Section contents.
+
+</section>
+
+        EOMD
+        :html => <<-EOHTML,
+
+<section>
+
+<h2>Section Heading</h2>
+
+<p>Section contents.</p>
+
+</section>
+
+        EOHTML
+        }
       
     }
   end
