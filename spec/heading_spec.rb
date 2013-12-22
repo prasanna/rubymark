@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Header" do
+describe "Heading" do
   describe "level one" do
     it "is parsed and rendered correctly" do
       expect(RubyMark.new("# Heading One").to_html).to match("<h1>Heading One</h1>")
