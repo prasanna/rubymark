@@ -24,4 +24,12 @@ describe "Emphasis" do
   it "is not present when a * is surrounded by spaces" do
     expect(RubyMark.new("This * stars * the point").to_html).to match(/^This \* stars \* the point/)
   end
+
+  it "is not present when a _ is escaped" do
+    expect(RubyMark.new("This \\_underscores\\_ the point").to_html).to match(/^This _underscores_ the point/)
+  end
+
+  it "is not present when a * is escaped" do
+    expect(RubyMark.new("This \\*stars\\* the point").to_html).to match(/^This \*stars\* the point/)
+  end
 end
