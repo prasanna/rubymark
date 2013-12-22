@@ -84,23 +84,6 @@ class RubyMark
 	    end
     end
     markdown
-
-   # m = /((^[ \t]*>[ \t]?.+\n(.+\n)*\n*)+)/.match(markdown)
-   # if m
-   #   bq = m[0] 
-   #   bq.gsub!(/^[ \t]*>[ \t]?/, "") # trim one level of quoting
-	 #   bq.gsub!(/^[ \t]+$/, "")       # trim whitespace-only lines
-	 #   bq.strip!
-	 #   
-	 #   markdown.gsub!(/((^[ \t]*>[ \t]?.+\n(.+\n)*\n*)+)/, "\n\n<blockquote><p>\n#{bq}\n</p></blockquote>\n\n")
-   # end
-   # return markdown
-    
-      #.gsub(/\n> (.*)\n[^>]/m, "\n<blockquote>\\1</blockquote>\n\n")
-      #.gsub(/\n> /, "\n")
-      # .gsub(/^\n> (.*)\n$/, "\n<blockquote>\\1</blockquote>\n")
-      #.gsub(/<p>> (.*)<\/p>/, "<blockquote>\\1</blockquote>")
-      #.gsub(/<p>> (.*)<\/p>/m, "<blockquote>\\1</blockquote>")
   end
   
   def to_html
