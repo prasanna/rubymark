@@ -72,16 +72,16 @@ class RubyMark
   
   def blockquotes(markdown)
     markdown.gsub!(/((^[ \t]*>[ \t]?.+\n(.+\n)*\n*)+)/) do
-  	  bq = $1
-  	  if bq
+      bq = $1
+      if bq
         bq.gsub!(/^[ \t]*>[ \t]?/, "") # trim one level of quoting
-		    bq.gsub!(/^[ \t]+$/, "")       # trim whitespace-only lines
-		    bq.strip!
-		  
-		    "<blockquote><p>\n#{bq}\n</p></blockquote>\n\n"
-		  else
-		    $&
-	    end
+        bq.gsub!(/^[ \t]+$/, "")       # trim whitespace-only lines
+        bq.strip!
+
+        "<blockquote><p>\n#{bq}\n</p></blockquote>\n\n"
+      else
+        $&
+      end
     end
     markdown
   end
