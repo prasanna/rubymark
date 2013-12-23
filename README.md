@@ -4,6 +4,9 @@
 
 RubyMark is an experiment with Markdown. I just wanted to see if it is possible to convert Markdown into HTML in a very simple / naive way that can be unit-tested.
 
+[![Gem Version](https://badge.fury.io/rb/rubymark.png)](http://badge.fury.io/rb/rubymark)
+
+
 ## How do I use it?
 
 `RubyMark.new("## Heading Two").to_html`
