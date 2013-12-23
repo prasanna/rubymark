@@ -5,7 +5,7 @@
 RubyMark is an experiment with Markdown. I just wanted to see if it is possible to convert Markdown into HTML in a very simple / naive way that can be unit-tested.
 
 [![Gem Version](https://badge.fury.io/rb/rubymark.png)](http://badge.fury.io/rb/rubymark)
-
+[![Build Status](https://travis-ci.org/prasanna/rubymark.png?branch=master)](https://travis-ci.org/prasanna/rubymark)
 
 ## How do I use it?
 
