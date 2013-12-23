@@ -7,7 +7,7 @@ describe "Block Quote" do
   end
   
   it "can be more than one paragraph long" do
-    # expect(RubyMark.new("").blockquotes("\n\n> This is a para in a block quote\nLine 2.\n\n> And this is the second para.\n\n")).to match(/^<blockquote>This is a para in a block quote\nLine 2.<\/blockquote>\n\n<blockquote>And this is the second para.<\/blockquote>/)
+    expect(RubyMark.new("").blockquotes("\n\n> This is a para in a block quote\nLine 2.\n\n> And this is the second para.\n\n")).to match(/^<blockquote><p>\nThis is a para in a block quote\nLine 2.\n\nAnd this is the second para.\n<\/p><\/blockquote>/)
     expect(RubyMark.new("\n\n> This is a para in a block quote\nLine 2.\n\n> And this is the second para.\n\n").to_html).to match(/^<blockquote><p>\nThis is a para in a block quote\nLine 2.<\/p>\n\n<p>And this is the second para.\n<\/p><\/blockquote>/)
   end
   
